@@ -1,0 +1,89 @@
+{
+  "quiz": [
+    {
+      "id": 1,
+      "question": "HTML'in açılımı nedir?",
+      "options": [
+        "Hyper Text Markup Language",
+        "High Text Machine Learning",
+        "Home Tool Markup Language",
+        "Hyperlink Text Main Language"
+      ],
+      "answer": "Hyper Text Markup Language"
+    },
+    {
+      "id": 2,
+      "question": "CSS ne için kullanılır?",
+      "options": [
+        "Veritabanı yönetimi",
+        "Sunucu tarafı programlama",
+        "Web sayfası stil ve tasarımı",
+        "Mobil uygulama geliştirme"
+      ],
+      "answer": "Web sayfası stil ve tasarımı"
+    },
+    {
+      "id": 3,
+      "question": "JavaScript hangi amaçla kullanılır?",
+      "options": [
+        "Sadece veritabanı yönetimi",
+        "Web sayfalarını etkileşimli hale getirmek",
+        "Yalnızca backend geliştirme",
+        "Sadece işletim sistemi programlama"
+      ],
+      "answer": "Web sayfalarını etkileşimli hale getirmek"
+    },
+    {
+      "id": 4,
+      "question": "React hangi şirket tarafından geliştirilmiştir?",
+      "options": ["Google", "Microsoft", "Facebook", "Apple"],
+      "answer": "Facebook"
+    },
+    {
+      "id": 5,
+      "question": "HTTP'nin açılımı nedir?",
+      "options": [
+        "Hyper Transfer Text Protocol",
+        "Hyper Text Transfer Protocol",
+        "High Transfer Text Program",
+        "Hyper Transfer Tool Protocol"
+      ],
+      "answer": "Hyper Text Transfer Protocol"
+    },
+    {
+      "id": 6,
+      "question": "JavaScript'te array uzunluğunu almak için hangi property kullanılır?",
+      "options": [".length", ".size()", ".count()", ".length()"],
+      "answer": ".length"
+    },
+    {
+      "id": 7,
+      "question": "Git versiyon kontrolünde yeni bir dal oluşturmak için hangi komut kullanılır?",
+      "options": ["git branch", "git init", "git commit", "git clone"],
+      "answer": "git branch"
+    },
+    {
+      "id": 8,
+      "question": "SQL'de veri seçmek için hangi komut kullanılır?",
+      "options": ["SELECT", "INSERT", "UPDATE", "DELETE"],
+      "answer": "SELECT"
+    },
+    {
+      "id": 9,
+      "question": "REST API'lerde veri çekmek için hangi HTTP metodu kullanılır?",
+      "options": ["POST", "GET", "PUT", "DELETE"],
+      "answer": "GET"
+    },
+    {
+      "id": 10,
+      "question": "Tailwind CSS hangi yapıyı temel alır?",
+      "options": [
+        "Inline CSS",
+        "Component bazlı CSS",
+        "Utility-first CSS",
+        "Sass mixin yapısı"
+      ],
+      "answer": "Utility-first CSS"
+    }
+  ]
+}
