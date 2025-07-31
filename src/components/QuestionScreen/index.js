@@ -1,4 +1,7 @@
 import TimerCircle from "components/TimerCircle";
+import Jokers from "components/Jokers";
+import AudienceVotes from "components/AudienceVotes";
+import PhoneHelp from "components/PhoneHelp";
 import React from "react";
 
 export default function QuestionScreen({
@@ -10,6 +13,15 @@ export default function QuestionScreen({
   selectedAnswer,
   showFeedback,
   timeLeft,
+  jokers,
+  useFiftyJoker,
+  useAudienceJoker,
+  usePhoneJoker,
+  eliminatedOptions,
+  showAudienceVotes,
+  showPhoneHelp,
+  closeAudienceVotes,
+  closePhoneHelp,
 }) {
   return (
     <div className="quiz-container">
@@ -23,9 +35,29 @@ export default function QuestionScreen({
       <TimerCircle timeLeft={timeLeft} />
 
       <p className="quiz-question">{currentQ.question}</p>
+
+      {/* Seyirci Oyları */}
+      <AudienceVotes
+        currentQ={currentQ}
+        showAudienceVotes={showAudienceVotes}
+        onClose={closeAudienceVotes}
+      />
+
+      {/* Telefon Yardımı */}
+      <PhoneHelp
+        showPhoneHelp={showPhoneHelp}
+        onClose={closePhoneHelp}
+        currentQ={currentQ}
+      />
+
       <div className="quiz-options">
         {currentQ.options.map((opt, i) => {
           let optionClass = "quiz-option";
+
+          // Elenen seçenekleri gizle
+          if (eliminatedOptions.includes(opt)) {
+            optionClass += " eliminated";
+          }
 
           if (showFeedback) {
             if (opt === currentQ.answer) optionClass += " correct";
@@ -37,12 +69,21 @@ export default function QuestionScreen({
               key={i}
               onClick={() => handleAnswer(opt)}
               className={optionClass}
-              disabled={showFeedback}
+              disabled={showFeedback || eliminatedOptions.includes(opt)}
             >
               {opt}
             </button>
           );
         })}
+
+        {/* Joker Butonları */}
+        <Jokers
+          jokers={jokers}
+          useFiftyJoker={useFiftyJoker}
+          useAudienceJoker={useAudienceJoker}
+          usePhoneJoker={usePhoneJoker}
+          showFeedback={showFeedback}
+        />
       </div>
     </div>
   );

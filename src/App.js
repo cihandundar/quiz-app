@@ -10,6 +10,16 @@ const wrongSound = new Audio("/sounds/wrong.mp3");
 const heartSound = new Audio("/sounds/heart.mp3");
 const winnerSound = new Audio("/sounds/winner.mp3");
 
+// Soruları karıştıran fonksiyon
+const shuffleQuestions = (questions) => {
+  const shuffled = [...questions];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
+
 export default function App() {
   const [username, setUsername] = useState("");
   const [started, setStarted] = useState(false);
@@ -19,8 +29,28 @@ export default function App() {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
   const [timeLeft, setTimeLeft] = useState(60);
+  
+  // Joker state'leri
+  const [jokers, setJokers] = useState({
+    fifty: true,
+    audience: true,
+    phone: true
+  });
+  const [eliminatedOptions, setEliminatedOptions] = useState([]);
+  const [showAudienceVotes, setShowAudienceVotes] = useState(false);
+  const [showPhoneHelp, setShowPhoneHelp] = useState(false);
 
-  const currentQ = quizData.quiz[currentIndex]; // ✅ Soru burada
+  // Karıştırılmış sorular
+  const [shuffledQuizData, setShuffledQuizData] = useState(null);
+
+  // Sayfa yüklendiğinde soruları karıştır
+  useEffect(() => {
+    setShuffledQuizData({
+      quiz: shuffleQuestions(quizData.quiz)
+    });
+  }, []);
+
+  const currentQ = shuffledQuizData?.quiz[currentIndex];
 
   const startQuiz = () => {
     if (username.trim() !== "") setStarted(true);
@@ -35,6 +65,60 @@ export default function App() {
     setShowFeedback(false);
     setTimeLeft(60);
     setUsername("");
+    // Joker'ları sıfırla
+    setJokers({
+      fifty: true,
+      audience: true,
+      phone: true
+    });
+    setEliminatedOptions([]);
+    setShowAudienceVotes(false);
+    setShowPhoneHelp(false);
+    // Soruları yeniden karıştır
+    setShuffledQuizData({
+      quiz: shuffleQuestions(quizData.quiz)
+    });
+  };
+
+  // %50 Joker fonksiyonu
+  const useFiftyJoker = () => {
+    if (!jokers.fifty) return;
+    
+    const wrongOptions = currentQ.options.filter(opt => opt !== currentQ.answer);
+    const shuffled = wrongOptions.sort(() => 0.5 - Math.random());
+    const toEliminate = shuffled.slice(0, 2);
+    
+    setEliminatedOptions(toEliminate);
+    setJokers(prev => ({ ...prev, fifty: false }));
+  };
+
+  // Seyirci Jokeri fonksiyonu
+  const useAudienceJoker = () => {
+    if (!jokers.audience) return;
+    
+    setShowAudienceVotes(true);
+    setJokers(prev => ({ ...prev, audience: false }));
+    
+    // Otomatik kapanmayı kaldırdık - sadece cevap verildiğinde kapanacak
+  };
+
+  // Telefon Jokeri fonksiyonu
+  const usePhoneJoker = () => {
+    if (!jokers.phone) return;
+    
+    setShowPhoneHelp(true);
+    setJokers(prev => ({ ...prev, phone: false }));
+    
+    // Otomatik kapanmayı kaldırdık - sadece cevap verildiğinde kapanacak
+  };
+
+  // Kapatma fonksiyonları
+  const closeAudienceVotes = () => {
+    setShowAudienceVotes(false);
+  };
+
+  const closePhoneHelp = () => {
+    setShowPhoneHelp(false);
   };
 
   const handleAnswer = (selected) => {
@@ -56,9 +140,12 @@ export default function App() {
     setShowFeedback(false);
     setSelectedAnswer(null);
     setTimeLeft(60);
+    setEliminatedOptions([]);
+    setShowAudienceVotes(false);
+    setShowPhoneHelp(false);
 
     const next = currentIndex + 1;
-    if (next < quizData.quiz.length) {
+    if (next < shuffledQuizData.quiz.length) {
       setCurrentIndex(next);
     } else {
       setFinished(true);
@@ -83,6 +170,18 @@ export default function App() {
     return () => clearTimeout(timer);
   }, [timeLeft, started, finished]);
 
+  // Sorular yüklenene kadar loading göster
+  if (!shuffledQuizData) {
+    return (
+      <div className="quiz-container">
+        <div className="loading">
+          <h2>Sorular Yükleniyor...</h2>
+          <div className="spinner"></div>
+        </div>
+      </div>
+    );
+  }
+
   if (!started)
     return (
       <StartScreen
@@ -97,7 +196,7 @@ export default function App() {
       <ResultScreen
         username={username}
         score={score}
-        total={quizData.quiz.length}
+        total={shuffledQuizData?.quiz.length || 0}
         restartQuiz={restartQuiz}
       />
     );
@@ -105,13 +204,22 @@ export default function App() {
   return (
     <QuestionScreen
       username={username}
-      currentQ={currentQ} // ✅ Soruyu gönderiyoruz
+      currentQ={currentQ}
       currentIndex={currentIndex}
-      total={quizData.quiz.length}
+      total={shuffledQuizData?.quiz.length || 0}
       handleAnswer={handleAnswer}
       selectedAnswer={selectedAnswer}
       showFeedback={showFeedback}
-      timeLeft={timeLeft} // ✅ Zamanı gönderiyoruz
+      timeLeft={timeLeft}
+      jokers={jokers}
+      useFiftyJoker={useFiftyJoker}
+      useAudienceJoker={useAudienceJoker}
+      usePhoneJoker={usePhoneJoker}
+      eliminatedOptions={eliminatedOptions}
+      showAudienceVotes={showAudienceVotes}
+      showPhoneHelp={showPhoneHelp}
+      closeAudienceVotes={closeAudienceVotes}
+      closePhoneHelp={closePhoneHelp}
     />
   );
 }
