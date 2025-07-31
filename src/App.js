@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import quizData from "./data/questions.json";
 import confetti from "canvas-confetti";
-import StartScreen from "./components/StartScreen";
-import QuestionScreen from "./components/QuestionScreen";
-import ResultScreen from "./components/ResultScreen";
+import { QuestionScreen, ResultScreen, StartScreen } from "components";
 
 const correctSound = new Audio("/sounds/corrent.mp3");
 const wrongSound = new Audio("/sounds/wrong.mp3");
@@ -29,12 +27,12 @@ export default function App() {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
   const [timeLeft, setTimeLeft] = useState(60);
-  
+
   // Joker state'leri
   const [jokers, setJokers] = useState({
     fifty: true,
     audience: true,
-    phone: true
+    phone: true,
   });
   const [eliminatedOptions, setEliminatedOptions] = useState([]);
   const [showAudienceVotes, setShowAudienceVotes] = useState(false);
@@ -46,7 +44,7 @@ export default function App() {
   // Sayfa yüklendiğinde soruları karıştır
   useEffect(() => {
     setShuffledQuizData({
-      quiz: shuffleQuestions(quizData.quiz)
+      quiz: shuffleQuestions(quizData.quiz),
     });
   }, []);
 
@@ -69,46 +67,48 @@ export default function App() {
     setJokers({
       fifty: true,
       audience: true,
-      phone: true
+      phone: true,
     });
     setEliminatedOptions([]);
     setShowAudienceVotes(false);
     setShowPhoneHelp(false);
     // Soruları yeniden karıştır
     setShuffledQuizData({
-      quiz: shuffleQuestions(quizData.quiz)
+      quiz: shuffleQuestions(quizData.quiz),
     });
   };
 
   // %50 Joker fonksiyonu
   const useFiftyJoker = () => {
     if (!jokers.fifty) return;
-    
-    const wrongOptions = currentQ.options.filter(opt => opt !== currentQ.answer);
+
+    const wrongOptions = currentQ.options.filter(
+      (opt) => opt !== currentQ.answer
+    );
     const shuffled = wrongOptions.sort(() => 0.5 - Math.random());
     const toEliminate = shuffled.slice(0, 2);
-    
+
     setEliminatedOptions(toEliminate);
-    setJokers(prev => ({ ...prev, fifty: false }));
+    setJokers((prev) => ({ ...prev, fifty: false }));
   };
 
   // Seyirci Jokeri fonksiyonu
   const useAudienceJoker = () => {
     if (!jokers.audience) return;
-    
+
     setShowAudienceVotes(true);
-    setJokers(prev => ({ ...prev, audience: false }));
-    
+    setJokers((prev) => ({ ...prev, audience: false }));
+
     // Otomatik kapanmayı kaldırdık - sadece cevap verildiğinde kapanacak
   };
 
   // Telefon Jokeri fonksiyonu
   const usePhoneJoker = () => {
     if (!jokers.phone) return;
-    
+
     setShowPhoneHelp(true);
-    setJokers(prev => ({ ...prev, phone: false }));
-    
+    setJokers((prev) => ({ ...prev, phone: false }));
+
     // Otomatik kapanmayı kaldırdık - sadece cevap verildiğinde kapanacak
   };
 
