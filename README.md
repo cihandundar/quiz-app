@@ -5,6 +5,7 @@ Modern ve etkileşimli bir quiz uygulaması. Kim Milyoner Olmak İster formatın
 ## ✨ Özellikler
 
 ### 🎮 Oyun Özellikleri
+
 - **Dinamik Soru Sistemi**: Her oyunda sorular rastgele karıştırılır
 - **Zamanlayıcı**: Her soru için 60 saniye süre
 - **Puan Sistemi**: Doğru cevaplar için puan kazanma
@@ -12,12 +13,14 @@ Modern ve etkileşimli bir quiz uygulaması. Kim Milyoner Olmak İster formatın
 - **Konfeti Animasyonu**: Kazanma anında görsel efekt
 
 ### 🃏 Joker Sistemi
+
 - **%50 Joker**: İki yanlış seçeneği eleme
 - **Seyirci Jokeri**: Seyircinin oylarını görme
 - **Telefon Jokeri**: Arkadaştan yardım alma
 - **Tek Kullanımlık**: Her joker sadece bir kez kullanılabilir
 
 ### 🎨 Kullanıcı Deneyimi
+
 - **Modern Arayüz**: Responsive tasarım
 - **Animasyonlar**: Smooth geçişler ve efektler
 - **Görsel Geri Bildirim**: Anlık doğru/yanlış gösterimi
@@ -26,17 +29,19 @@ Modern ve etkileşimli bir quiz uygulaması. Kim Milyoner Olmak İster formatın
 ## 🛠️ Kullanılan Teknolojiler
 
 ### Frontend
+
 - **React 19.1.1** - Modern React hooks ve functional components
 - **React Router DOM 7.7.1** - Sayfa yönlendirmeleri
 - **Sass 1.89.2** - Gelişmiş CSS özellikleri
 - **Canvas Confetti 1.9.3** - Konfeti animasyonları
 
 ### Geliştirme Araçları
+
 - **Create React App** - Proje yapısı ve build sistemi
 - **ESLint** - Kod kalitesi kontrolü
-- **Jest & Testing Library** - Test altyapısı
 
 ### Ses ve Medya
+
 - **Web Audio API** - Ses efektleri yönetimi
 - **MP3 Ses Dosyaları** - Oyun içi ses efektleri
 
@@ -70,23 +75,27 @@ quiz-app/
 ## 🚀 Kurulum ve Çalıştırma
 
 ### Gereksinimler
+
 - Node.js (v14 veya üzeri)
 - npm veya yarn
 
 ### Kurulum Adımları
 
 1. **Projeyi klonlayın**
+
    ```bash
    git clone [repository-url]
    cd quiz-app
    ```
 
 2. **Bağımlılıkları yükleyin**
+
    ```bash
    npm install
    ```
 
 3. **Uygulamayı başlatın**
+
    ```bash
    npm start
    ```
@@ -120,6 +129,7 @@ npm run eject
 ## 🎨 Özelleştirme
 
 ### Yeni Soru Ekleme
+
 `src/data/questions.json` dosyasına yeni sorular ekleyebilirsiniz:
 
 ```json
@@ -132,9 +142,11 @@ npm run eject
 ```
 
 ### Ses Efektleri
+
 `public/sounds/` klasörüne yeni ses dosyaları ekleyebilirsiniz.
 
 ### Stil Değişiklikleri
+
 `src/styles/main.scss` dosyasından renk ve tasarım özelleştirmeleri yapabilirsiniz.
 
 ## 🤝 Katkıda Bulunma
@@ -156,4 +168,3 @@ Bu proje modern web teknolojileri kullanılarak geliştirilmiştir. React'in en 
 ---
 
 **Not**: Bu uygulama eğitim amaçlı geliştirilmiştir ve gerçek bir yarışma uygulaması değildir.
-
